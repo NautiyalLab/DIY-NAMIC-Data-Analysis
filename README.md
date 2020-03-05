@@ -24,13 +24,13 @@ ___
     - Output: ALL metric parameters for SELECTED day
         - title format: ***M0228_0229_18-06_P5.csv***   
         **(M-startdate_enddate_starttime-endtime_paradigm)** 'M' stands for metric
-        
+
+After getting the metrics for each day, move the files into a single folder for the next step. 
 
 - **Step2: Make a summary excel sheet (different parameters saved into different sheets)**
     - Input: Selected Folder (metrics for each day)
     - Output: Summary Excel Sheet
         - title format: ***Group5_dark_Summary.xlsx***
-
 
 - **Plotting**
     - In Development
