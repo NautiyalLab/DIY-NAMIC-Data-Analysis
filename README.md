@@ -22,7 +22,9 @@ ___
 - **Step1: Parsing csv files into different timeframes**
     - Input: aggregated csv file ex) ***0228 P5_concat.csv***
     - Output: ALL metric parameters for SELECTED day
-        - title format: ***M0228_0229_18-06_P5.csv***
+        - title format: ***M0228_0229_18-06_P5.csv***   
+        **(M-startdate_enddate_starttime-endtime_paradigm)** 'M' stands for metric
+        
 
 - **Step2: Make a summary excel sheet (different parameters saved into different sheets)**
     - Input: Selected Folder (metrics for each day)
