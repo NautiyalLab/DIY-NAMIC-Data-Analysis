@@ -17,6 +17,7 @@ from datetime import datetime
 
 ## and then use ONE plotting graph for everything!!
 
+### WEIGHT PLOTTING
 
 def return_weight_plot_df(file_path):
     weight_df = pd.read_csv(file_path, low_memory=False)  # Read in the csv file in integers (numbers)
@@ -29,7 +30,7 @@ def return_weight_plot_df(file_path):
     return plot_df
 
 
-def convert_idx_to_datetime(df):
+def convert_weight_idx_to_datetime(df):
 
     new_index = []
     for i in range(len(df.index)):
@@ -42,6 +43,39 @@ def convert_idx_to_datetime(df):
 
     return df
 
+### WEIGHT PLOTTING END
+
+### PARAMETER_PLOTTING (for the summary excel file)
+
+def return_parameter_summary_excel(file_path):
+    summary_df = pd.read_excel(file_path, sheet_name=None)
+
+    return summary_df
+
+def return_parameter_plot_df(df):
+
+    df = df.drop(['Columns'], axis=1)
+    df = df.set_index('Box Number')
+
+    plot_df = df.T
+    plot_df.columns = plot_df.columns.astype(str)  ## Convert only the columns to strings!  (to parse it easily)
+
+    return plot_df
+
+
+def convert_parameter_idx_to_datetime(df, year=2020):
+
+    new_index = []
+    for i in range(len(df.index)):
+        dt_index = datetime.strptime(df.index[i], "%m/%d") # (month/day) - zeropadded
+        dt_index = dt_index.replace(year)
+        new_index.append(dt_index)
+
+    df.index = new_index
+
+    return df
+
+### PARAMETER_PLOTTING (for the summary excel file) END
 
 def get_means_by_group(plot_df, control_group, control_list, exp_group, exp_list):
 
@@ -53,7 +87,6 @@ def get_means_by_group(plot_df, control_group, control_list, exp_group, exp_list
     mean_df[exp_group + " Sem"] = mean_df.loc[:, exp_list].sem(axis=1, ddof=1)
 
     return mean_df
-
 
 
 def plot_grouped_df(plot_df, control_group, control_list, exp_group, exp_list, subject_list, paradigms=None):

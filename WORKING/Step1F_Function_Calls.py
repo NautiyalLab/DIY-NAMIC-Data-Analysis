@@ -13,6 +13,7 @@ end_parsetime = input("Enter the end-time (YYYY/MM/DD HH:MM) ").strip()
 
 
 # # # # # # Separating INPUT functions from Tkinter function calls
+# # Can't run them together or they'll crash
 
 
 ## Pick the file path! (single file (output from Step 0)

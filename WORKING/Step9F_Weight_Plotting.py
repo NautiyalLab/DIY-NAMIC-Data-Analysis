@@ -12,7 +12,11 @@ file_path = select_single_file()
 
 ## Return Plot df  (weight plots need to have their index converted!)
 plot_df = return_weight_plot_df(file_path)
-plot_df = convert_idx_to_datetime(plot_df)
+
+# print(plot_df)
+
+## Index conversion to datetime!
+plot_df = convert_weight_idx_to_datetime(plot_df)
 
 
 
