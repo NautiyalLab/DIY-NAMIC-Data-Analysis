@@ -1,9 +1,9 @@
 
 ### This file contains ALL the basic information about a group! (used mainly for plotting purposes)
 
-control_group = "Adults"                       ## Change Here
-control_list = ['1','2','3','4','5']           ## Change Here (in boxes)
-exp_group = "Adols"                            ## Change Here
+control_group = "BActin Neg"                       ## Change Here
+control_list = ['1','3','4','5']           ## Change Here (in boxes)
+exp_group = "BActin Pos"                            ## Change Here
 exp_list = ['6','7','8','9','10']              ## Change Here (in boxes)
 
 # Actual Subject Numbers

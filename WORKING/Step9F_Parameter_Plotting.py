@@ -15,38 +15,67 @@ file_path = select_single_file()
 
 ## Save the TIMEFRAME (dark or 23hr) into a variable
 file_name = os.path.basename(file_path)
-timeframe = file_name.split(".")[0].split("_")[-2]
+timeframe = file_name.split(".")[0].split("_")[-2]  ### CHANGE HERE IF NECESSARY!! (timeframe (Dark or 23hr) will be placed one word prior to word: Summary)
 
 ### Return summary_df from excel file (returns all sheets) (result is an ordered dictionary)
 summary_df_dict = return_parameter_dfs_from_summary_excel(file_path)
 
+### Paradigm Cutoff dates (vertical lines)
+paradigms = parameter_dates_P5   # CHANGE HERE for paradigm cutoff dates
 
 
-### ### #### Plotting only one parameter! #### ### ###
+### ### #### Plotting only ONE parameter! #### ### ###
+#
+# parameter = "pokes_iti_window"   # CHANGE HERE for parameter
+# parameter_df = summary_df_dict[parameter]
+# parameter_df = return_parameter_plot_df(parameter_df)
+#
+# fig, ax = plot_grouped_df(parameter_df, control_group, control_list, exp_group, exp_list, subject_list, paradigms=paradigms)
+#
+# title_key = parameter+"_"+timeframe
+# title = plot_code_dict[title_key]
+# ax.set_title(title, size=20)
+# ax.set_xlabel("Days", fontsize=16)           # CHANGE Accordingly
+# ax.set_ylabel("Counts", fontsize=16)    # CHANGE Accordingly
+#
+# plt.tight_layout()
+#
+# ### Show Plots
+# plt.show()
 
-paradigms = parameter_dates_P5   # Change Here for paradigm cutoff dates
-parameter = "pokes_iti_window"   # Change here for parameter
-parameter_df = summary_df_dict[parameter]
-parameter_df = return_parameter_plot_df(parameter_df)
-
-fig, ax = plot_grouped_df(parameter_df, control_group, control_list, exp_group, exp_list, subject_list, paradigms=paradigms)
-
-title_key = parameter+"_"+timeframe
-title = plot_code_dict[title_key]
-ax.set_title(title, size=20)
-ax.set_xlabel("Days", fontsize=16)           # Change Accordingly
-ax.set_ylabel("Counts", fontsize=16)    # Change Accordingly
-
-plt.tight_layout()
-plt.show()
-
+### Save Plot
 # plt.savefig(title_key)
+
 
 
 ### ### #### Plotting ALL parameters! #### ### ###
 
+# Reference: [Multiple Plots in separate windows](https://stackoverflow.com/questions/42430260/is-it-possible-to-show-multiple-plots-in-separate-windows-using-matplotlib)
 
+i = 0
 
+for key, value in summary_df_dict.items():
+
+    # name = k+"_graph"
+    parameter = return_parameter_plot_df(value)  # formats the dataframe(value)
+
+    i=i+1
+    plt.figure(i)
+
+    fig, ax = plot_grouped_df(parameter, control_group, control_list, exp_group, exp_list, subject_list, paradigms=paradigms)
+
+    title_key = key + "_" + timeframe
+    title = plot_code_dict[title_key]
+    ax.set_title(title, size=20)
+    ax.set_xlabel("Days", fontsize=16)  # Change Accordingly
+    ax.set_ylabel("Counts", fontsize=16)  # Change Accordingly
+
+plt.tight_layout()
+
+### Show Plots
+plt.show()
+
+# plt.savefig
 
 
 
