@@ -20,7 +20,7 @@ plot_df = convert_weight_idx_to_datetime(plot_df)
 
 
 
-fig, ax = plot_grouped_df(plot_df, control_group, control_list, exp_group, exp_list, subject_list, paradigms=weights_dates_P5)
+fig, ax = plot_grouped_df(plot_df, control_group, control_list, exp_group, exp_list, subject_list, paradigms=weight_dates_P5)
 
 
 ## Add labels as you wish! (title / x-axis / y-axis)

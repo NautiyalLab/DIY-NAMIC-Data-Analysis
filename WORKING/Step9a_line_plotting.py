@@ -49,7 +49,7 @@ def convert_weight_idx_to_datetime(df):
 
 ### PARAMETER_PLOTTING (INPUT: summary excel file)
 
-def return_parameter_summary_excel(file_path):
+def return_parameter_dfs_from_summary_excel(file_path):
     summary_df = pd.read_excel(file_path, sheet_name=None)
 
     return summary_df
@@ -64,6 +64,7 @@ def return_parameter_plot_df(df):
 
     return plot_df
 
+# NOW UNNECESSARY! (since the excel file index (columns) is already datetime format!
 
 # def convert_parameter_idx_to_datetime(df, year=2020):
 #     """
