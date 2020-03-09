@@ -98,7 +98,7 @@ def convert_index_code_to_string(df):
     new_df = df.copy()
     new_df['new_idx'] = datetime_idx
     new_df = new_df.set_index('new_idx')
-    del new_df.index.name
+    del new_df.index.name      # When using pandas 0.25, can retain this line // If using pandas 1.0, comment this line out!!
 
     # New_df will have datetime index!!
     return new_df
