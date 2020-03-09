@@ -18,7 +18,7 @@ iti = summary_df['pokes_iti_window']
 iti = return_parameter_plot_df(iti)
 
 print(iti.index)
-# iti = convert_parameter_idx_to_datetime(iti)
+iti = convert_parameter_idx_to_datetime(iti)
 # plot_df = convert_idx_to_datetime(plot_df)
 
 

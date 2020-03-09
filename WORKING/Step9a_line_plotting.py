@@ -64,6 +64,12 @@ def return_parameter_plot_df(df):
 
 
 def convert_parameter_idx_to_datetime(df, year=2020):
+    """
+
+    :param df:
+    :param year: must change accordingly (with new years etc.)
+    :return:
+    """
 
     new_index = []
     for i in range(len(df.index)):

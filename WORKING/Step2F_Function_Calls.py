@@ -22,7 +22,8 @@ df_list = []
 for i, string in enumerate(valid_code_string):
     # print(string)
     df = filter_by_code(total_df, string)
-    df_list.append(df)
+    numeric_df = convert_df_to_numeric(df)
+    df_list.append(numeric_df)
 
 
 ## Saving to Excel into separate sheets!

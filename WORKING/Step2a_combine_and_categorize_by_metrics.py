@@ -2,6 +2,7 @@ import glob
 import os
 from natsort import natsorted, ns
 import pandas as pd
+from datetime import datetime
 
 from Code_Dictionaries import *
 
@@ -44,38 +45,38 @@ def return_metrics_code(metric_string):
     return metric_code
 
 
-def filter_by_location(df, loc=["Total"]):
+def filter_by_location(multi_df, loc=["Total"]):
     """
-    :param df: (multi-level dataframe)
+    :param multi_df: multi_level_dataframe
     :param loc: default value is Total (but can change to any other locations (Left/Middle/Right etc.)
     :return: filtered dataframe by location
     """
     ## input is multi-level --> thus need to get first (1) level
-    filtered_df = df.iloc[:, df.columns.get_level_values(1).isin(loc)]
+    filtered_df = multi_df.iloc[:, multi_df.columns.get_level_values(1).isin(loc)]
 
     return filtered_df
 
 
-def filter_by_code(df, metric_string):
+def filter_by_code(multi_df, metric_string):  # changed df to multi_df
     """
-    :param df: multi-level dataframe as input
+    :param multi_df: multi-level dataframe as input
     :param metric_string: use the function (return_metrics_code)
     :return:
     """
 
     metric_code = return_metrics_code(metric_string)
-    df_idx = df.index.tolist()
+    df_idx = multi_df.index.tolist()
     metric_idx = [i for i, value in enumerate(df_idx) if metric_code in value]
 
-    filtered_df = df.iloc[metric_idx]
+    filtered_df = multi_df.iloc[metric_idx]
 
     ## convert_index_code_to_string() function defined below
-    idx_converted_df = convert_index_code_to_string(filtered_df)
+    datetime_idx_converted_df = convert_index_code_to_string(filtered_df)
 
-    return idx_converted_df
+    return datetime_idx_converted_df
 
 
-### Converting dataframe index to the metric string
+### Converting dataframe index to the metric stringname + conversion of date strings to datetime!
 # Refer to Group4 Drug Analysis -> Merge Metrics (on how to convert index)
 
 def convert_index_code_to_string(df):
@@ -87,15 +88,23 @@ def convert_index_code_to_string(df):
     new_idx_list = []
     idx_list = df.index.to_list()
     for i in range(len(idx_list)):
-        dates = idx_list[i][:5]
+        dates = idx_list[i][:10]  # includes the year!!
 
         # new_idx_list.append(dates + "_" + metric_string)   ## Dates + Metric Name (string)
-        new_idx_list.append(dates)     ## Just the dates
+        new_idx_list.append(dates)     ## Appending  datetime (with year included)
+
+    datetime_idx = [datetime.strptime(date, '%Y/%m/%d') for date in new_idx_list]
 
     new_df = df.copy()
-    new_df['new_idx'] = new_idx_list
+    new_df['new_idx'] = datetime_idx
     new_df = new_df.set_index('new_idx')
     del new_df.index.name
 
+    # New_df will have datetime index!!
     return new_df
 
+def convert_df_to_numeric(df):
+
+    numeric_df = df.apply(pd.to_numeric)
+
+    return numeric_df
