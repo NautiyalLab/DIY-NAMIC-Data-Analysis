@@ -47,8 +47,8 @@ def counts_during_window(m_parsed_dt_df, start_parsetime, window_of_interest, da
             T_count = L_count + M_count + R_count
 
 
-        # date
-        m_date = start_parsetime[5:10]  # Use parsetime value to extract dates! (since each file can have data for multiple days )
+        # date (YYYY/MM/DD) (NEED TO INCLUDE YEAR for easier datetime conversion down the road)
+        m_date = start_parsetime[:10]  # Use parsetime value to extract dates! (since each file can have data for multiple days )
 
         # hour!
         m_hour = start_parsetime[-5:]
@@ -102,9 +102,8 @@ def count_events(m_parsed_dt_df, start_parsetime, code_of_interest, daily=True):
         right = len(filtered[filtered.event_code == code_of_interest[2]].index)
         total = left + middle + right
 
-        # date
-        m_date = start_parsetime[
-                 5:10]  # Use parsetime value to extract dates! (since each file can have data for multiple days )
+        # date (YYYY/MM/DD) (NEED TO INCLUDE YEAR for easier datetime conversion down the road)
+        m_date = start_parsetime[:10]  # Use parsetime value to extract dates! (since each file can have data for multiple days )
 
         # hour!
         m_hour = start_parsetime[-5:]
