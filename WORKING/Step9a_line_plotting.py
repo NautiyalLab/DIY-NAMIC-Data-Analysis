@@ -45,7 +45,9 @@ def convert_weight_idx_to_datetime(df):
 
 ### WEIGHT PLOTTING END
 
-### PARAMETER_PLOTTING (for the summary excel file)
+### ### ### ### ### ### ### ### ### ### ### ### ###
+
+### PARAMETER_PLOTTING (INPUT: summary excel file)
 
 def return_parameter_summary_excel(file_path):
     summary_df = pd.read_excel(file_path, sheet_name=None)
@@ -63,25 +65,27 @@ def return_parameter_plot_df(df):
     return plot_df
 
 
-def convert_parameter_idx_to_datetime(df, year=2020):
-    """
+# def convert_parameter_idx_to_datetime(df, year=2020):
+#     """
+#
+#     :param df:
+#     :param year: must change accordingly (with new years etc.)
+#     :return:
+#     """
+#
+#     new_index = []
+#     for i in range(len(df.index)):
+#         dt_index = datetime.strptime(df.index[i], "%Y/%m/%d") # (month/day) - zeropadded
+#         dt_index = dt_index.replace(year)
+#         new_index.append(dt_index)
+#
+#     df.index = new_index
+#
+#     return df
 
-    :param df:
-    :param year: must change accordingly (with new years etc.)
-    :return:
-    """
+### PARAMETER_PLOTTING (INPUT: summary excel file) END
 
-    new_index = []
-    for i in range(len(df.index)):
-        dt_index = datetime.strptime(df.index[i], "%m/%d") # (month/day) - zeropadded
-        dt_index = dt_index.replace(year)
-        new_index.append(dt_index)
-
-    df.index = new_index
-
-    return df
-
-### PARAMETER_PLOTTING (for the summary excel file) END
+### ### ### ### ### ### ### ### ### ### ### ### ###
 
 def get_means_by_group(plot_df, control_group, control_list, exp_group, exp_list):
 
