@@ -15,27 +15,27 @@ ___
 ### How to Run
 
 #### Step0: Concatenate_all_txt_files (Raw_Processing_Files)
-    - Input: Selected Folder (raw processing files)
-    - Output: CSV file with aggregated box data
-        - title format: ***0228 P5_concat.csv***
+- Input: Selected Folder (raw processing files)
+- Output: CSV file with aggregated box data
+    - title format: ***0228 P5_concat.csv***
 
 #### Step1: Parsing csv files into different timeframes
-    - Input: aggregated csv file ex) ***0228 P5_concat.csv***
-    - Output: ALL metric parameters for SELECTED day
-        - title format: ***M0228_0229_18-06_P5.csv***   
+- Input: aggregated csv file ex) ***0228 P5_concat.csv***
+- Output: ALL metric parameters for SELECTED day
+    - title format: ***M0228_0229_18-06_P5.csv***   
         **(M-startdate_enddate_starttime-endtime_paradigm)** 'M' stands for metric
 
 After getting the metrics for each day, move the files into a single folder for the next step.
 
 #### Step2: Make a summary excel sheet (different parameters saved into different sheets)
-    - Input: Selected Folder (metrics for each day)
-    - Output: Summary Excel Sheet
-        - title format: ***Group5_dark_Summary.xlsx***
+- Input: Selected Folder (metrics for each day)
+- Output: Summary Excel Sheet
+    - title format: ***Group5_dark_Summary.xlsx***
 
 
 
 
-#### Plotting**
+#### Plotting
 
 ***Before Plotting:***
 
@@ -43,21 +43,21 @@ After getting the metrics for each day, move the files into a single folder for 
 
 ***Different Plottings***
 
-    - 1.Weight Plotting:
-        - Input: Weight File (csv)
-        - Output:
-        - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
+- 1.Weight Plotting:
+    - Input: Weight File (csv)
+    - Output:
+    - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
 
-    - 2.Parameter Plotting
-        - Input: Summary excel file (contains all parameters in separate sheets)
-        - Output:
-        - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
+- 2.Parameter Plotting
+    - Input: Summary excel file (contains all parameters in separate sheets)
+    - Output:
+    - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
 
-    - 3.Latency Plotting
+- 3.Latency Plotting
 
-        - Input:
-        - Output:
-        - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
+    - Input:
+    - Output:
+    - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
 
 
 ### Development
