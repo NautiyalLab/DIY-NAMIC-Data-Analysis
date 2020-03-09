@@ -37,27 +37,27 @@ After getting the metrics for each day, move the files into a single folder for 
 
 #### Plotting
 
-***Before Plotting:***
+- ***Before Plotting:***
 
-- Make sure to update `xBasic_Group_Info.py` file with appropriate information on control group / experimental group / paradigm cutoff date list etc.
+    - Make sure to update `xBasic_Group_Info.py` file with appropriate information on control group / experimental group / paradigm cutoff date list etc.
 
-***Different Plottings***
+- ***Different Plottings***
 
-- 1.Weight Plotting:
-    - Input: Weight File (csv)
-    - Output:
-    - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
+    - 1.Weight Plotting:
+        - Input: Weight File (csv)
+        - Output:
+        - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
 
-- 2.Parameter Plotting
-    - Input: Summary excel file (contains all parameters in separate sheets)
-    - Output:
-    - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
+    - 2.Parameter Plotting
+        - Input: Summary excel file (contains all parameters in separate sheets)
+        - Output:
+        - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
 
-- 3.Latency Plotting
+    - 3.Latency Plotting
 
-    - Input:
-    - Output:
-    - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
+        - Input:
+        - Output:
+        - Notes: Make sure to add appropriate xlabels / ylabels / title etc.
 
 
 ### Development
