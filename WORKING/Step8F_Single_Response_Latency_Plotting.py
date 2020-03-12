@@ -1,6 +1,6 @@
 from Step1a_timeframe_parsing import *
 from Tkinter_Selection import *
-from Step8a_latency_plotting import *
+from Step8a_single_latency_plotting import *
 from xBasic_Group_Info import *
 
 ### INPUT: concatenated csv data AFTER Step 0  (_concat suffix)
@@ -50,7 +50,7 @@ plot_df.to_excel(save_title)
 #### PLOTTING!!!  -- Single Day CDF
 
 trial_duration = 5000
-fig, ax = plot_m_latency_cdf(m_latency_df, start_parsetime, g3_control_list, g3_exp_list, threshold=trial_duration, plot_dropped_box=False, valid_trials=True, horizontal=0.9, port_loc='all')
+fig, ax = plot_m_latency_cdf(m_latency_df, start_parsetime, g4_control_list, g4_exp_list, threshold=trial_duration, plot_dropped_box=False, valid_trials=True, horizontal=0.9, port_loc='all')
 
 # final_latency_df.to_excel(title)
 # print(test)
