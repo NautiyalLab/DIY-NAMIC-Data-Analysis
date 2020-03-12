@@ -13,14 +13,14 @@ file_path = select_single_file()
 ## Return Plot df  (weight plots need to have their index converted!)
 plot_df = return_weight_plot_df(file_path)
 
-# print(plot_df)
-
 ## Index conversion to datetime!
 plot_df = convert_weight_idx_to_datetime(plot_df)
 
 
+##### WEIGHT PLOTTING #####
 
-fig, ax = plot_grouped_df(plot_df, control_group, control_list, exp_group, exp_list, subject_list, paradigms=weight_dates_P5)
+## Uses Line Plotting!
+fig, ax = plot_grouped_df(plot_df, g4_control_group, g4_control_list, g4_exp_group, g4_exp_list, g4_subject_list, paradigms=g5_weight_dates)
 
 
 ## Add labels as you wish! (title / x-axis / y-axis)

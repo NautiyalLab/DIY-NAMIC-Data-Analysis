@@ -120,5 +120,6 @@ def actual_start_end_times(m_head_dict):
     print("Start Day: {} - Start Time: {}".format(sd, st))
     print("End Day: {} - End Time: {}".format(ed, et))
 
+    print("Make sure to parse for 23 HOURS!!")
 
     # return start_day_list[0], start_time_list[0], end_day_list[-1], end_time_list[-1]

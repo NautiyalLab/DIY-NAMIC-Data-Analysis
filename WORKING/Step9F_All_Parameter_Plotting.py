@@ -38,7 +38,7 @@ for key, value in summary_df_dict.items():
     # name = k+"_graph"
     parameter = return_parameter_plot_df(value)  # formats the dataframe(value)
 
-    i=i+1
+    i=i+1  # increment to generate a new window
     plt.figure(i)
 
     fig, ax = plot_grouped_df(parameter, g4_control_group, g4_control_list, g4_exp_group, g4_exp_list, g4_subject_list, paradigms=paradigms)   ## Change HERE!
@@ -58,47 +58,3 @@ plt.show()
 
 
 
-
-
-
-
-
-
-# graph_title = plot_code_dict[parameter_name]
-
-
-### ### #### Plotting ALL parameters at the same time (separate windows! #### ### ###
-
-# for k, v in summary_df_dict.items():
-#     print(k + "graph")
-#     # k + "_graph" = v
-#     # plt.figure()
-#     name = k+"_graph"
-#     name = return_parameter_plot_df(v)
-#
-# fig, ax = plot_grouped_df(name, control_group, control_list, exp_group, exp_list, subject_list, paradigms=weights_dates_P5)
-#
-# plt.tight_layout()
-# plt.show()
-
-
-
-#
-# i=0
-#
-# for k, v in summary_df_dict.items():
-#     print(k + "graph")
-#     # k + "_graph" = v
-#     # plt.figure()
-#     name = k+"_graph"
-#     name = return_parameter_plot_df(v)
-#     i=i+1
-#     plt.figure(i)
-#     fig, ax = plot_grouped_df(name, control_group, control_list, exp_group, exp_list, subject_list, paradigms=weights_dates_P5)
-#
-# plt.tight_layout()
-# plt.savefig("D")
-
-
-#
-# graph_title = plot_code_dict[parameter_name]
