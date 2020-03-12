@@ -1,22 +1,40 @@
 from Step1a_timeframe_parsing import *
 from Tkinter_Selection import *
-from Step8a_single_latency_plotting import *
+from Step8b_reward_response_latency import *
 from xBasic_Group_Info import *
+
+from Code_Dictionaries import *
 
 ### INPUT: concatenated csv data AFTER Step 0  (_concat suffix)
 
 ### THIS Script SAVES and also PLOTS!
 
-## Input Start-Time & End-Time for Latency Plotting  (PARSING)
+## Input Group # & Start-Time & End-Time for Latency Plotting  (PARSING)
+group_number = input("Which group is this? (Ex: g3) ").strip().lower()
 start_parsetime = input("Enter start-time for LATENCY Plotting (YYYY/MM/DD HH:MM) ").strip()
 end_parsetime = input("Enter end-time for LATENCY Plotting (YYYY/MM/DD HH:MM) ").strip()
 
-## Required Variables for getting multi_df
-columns = ['event_string', 'event_code', 'timestamp', 'counter']
 
-## Basic Information on Trials (Start and End of Trials)
-trial_start = ['7171','9171']
-trial_end = ['7170','7160','7540','9170','9160','9540']   # Correct Trial / Incorrect Trial / Omission Trial
+### Determining Groups automatically!! (Expand this as groups increase!!)
+
+if group_number == "g3":
+    group = "Group 3"
+    control_list = g3_control_list
+    exp_list = g3_exp_list
+
+elif group_number == "g4":
+    group = "Group 4"
+    control_list = g4_control_list
+    exp_list = g4_exp_list
+
+elif group_number == "g5":
+    group = "Group 5"
+    control_list = g5_control_list
+    exp_list = g5_exp_list
+
+else:
+    raise ValueError("Enter a valid group number (G3/G4/G5) ")
+
 
 
 ##### Actual RUN ##### Actual RUN ##### Actual RUN #####
@@ -41,6 +59,7 @@ m_latency_df = return_multi_response_latency_df(m_parsed_dt_df, trial_start, tri
 
 save_title = start_parsetime[:10].replace("/","-") + "_latency.xlsx"
 plot_df = convert_to_long_format(m_latency_df)
+plot_df['Group'] = group
 
 ## Saving Individual latency df to long format!
 plot_df.to_excel(save_title)
@@ -50,7 +69,7 @@ plot_df.to_excel(save_title)
 #### PLOTTING!!!  -- Single Day CDF
 
 trial_duration = 5000
-fig, ax = plot_m_latency_cdf(m_latency_df, start_parsetime, g4_control_list, g4_exp_list, threshold=trial_duration, plot_dropped_box=False, valid_trials=True, horizontal=0.9, port_loc='all')
+fig, ax = plot_single_latency_cdf(m_latency_df, start_parsetime, control_list, exp_list, threshold=trial_duration, plot_dropped_box=False, valid_trials=True, horizontal=0.9, port_loc='all')
 
 # final_latency_df.to_excel(title)
 # print(test)

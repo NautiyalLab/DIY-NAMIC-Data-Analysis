@@ -43,7 +43,6 @@ def return_multilevel_df_to_csv(files_list, box_numbers, col_names, selected_dir
     for i in range(len(files)):
         f = files[i]
         # box_num.append(i + 1)  # box_number for outermost level (index)
-
         df = pd.read_csv(f, sep=":", header=None, names=col_names)   # read_csv can also read in txt files! 
         result.append(df)
 

@@ -9,9 +9,20 @@ from matplotlib.dates import DateFormatter
 from matplotlib import pyplot as plt
 
 from datetime import datetime
+from Step8a_cdf_functions import *
 
 
-### ### Reward Response Latencies ### ###
+#### Necessary Information
+## Required Variables for getting multi_df (used in xFinal scripts)
+columns = ['event_string', 'event_code', 'timestamp', 'counter']
+
+## Basic Information on Trials (Start and End of Trials) (used in xFinal scripts)
+trial_start = ['7171','9171']
+trial_end = ['7170','7160','7540','9170','9160','9540']   # Correct Trial / Incorrect Trial / Omission Trial
+
+
+
+### ### REWARD RESPONSE LATENCY ### ###
 
 ### Individual Latencies
 
@@ -97,65 +108,21 @@ def return_multi_response_latency_df(m_body_df, start_array, end_array):
 
 
 
-### Actual Plotting (CUMULATIVE DENSITY FUNCTION PLOTTING)
-### ECDF
-## Error Handling
-
-class Error(Exception):
-    """Base class for exceptions in this module."""
-    pass
-
-class InputError(Error):
-    """Exception raised for errors in the input.
-
-    Attributes:
-        expression -- input expression in which the error occurred
-        message -- explanation of the error
-    """
-
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
-
-def ecdf(data):
-    """Compute ECDF for a one-dimensional array of measurements."""
-
-    # x-data for the ECDF after dropping nan values: x
-    x = np.sort(data)
-    n = len(data)
-
-    # # percentage values
-    y = np.arange(1, n + 1) / n
-
-    return x, y
-
-## Simple CDF Function
-
-def plot_cdf(control_x, control_y, exp_x, exp_y):
-    fig, ax = plt.subplots()
-
-    ax.plot(control_x, control_y, marker=".", linestyle='none', ms=5, color='red', label="Control Group")
-    ax.plot(exp_x, exp_y, marker=".", linestyle='none', ms=5, color='blue', label="Experimental Group")
-
-    ax.legend(loc='best', bbox_to_anchor=(1.01, 1.01))
-
-
-
 ## Drop box number in case we are dropping any boxes from analysis
-## Update! 3/12/2020 --> No need to use this function!
-## (as the plotting function (plot_m_latency_cdf) will automatically take care of which boxes to plot and which to not etc.)
-def drop_box_number_from_df(multi_df, number):
-    """
-    :param multi_df:
-    :param number: MUST BE IN STRING
-    :return:
-    """
-    if not isinstance(number, (str)):
-        raise TypeError("Enter box number in String format (ex: '5')")
-
-    dropped_multi_df = multi_df.drop(number, axis=1, level=0)
-
-    return dropped_multi_df
+# NOT NEEDED (3/12/2020)
+# (as the plotting function (plot_m_latency_cdf) will automatically take care of which boxes to plot and which to not etc.)
+# def drop_box_number_from_df(multi_df, number):
+#     """
+#     :param multi_df:
+#     :param number: MUST BE IN STRING
+#     :return:
+#     """
+#     if not isinstance(number, (str)):
+#         raise TypeError("Enter box number in String format (ex: '5')")
+#
+#     dropped_multi_df = multi_df.drop(number, axis=1, level=0)
+#
+#     return dropped_multi_df
 
 
 ## Formatting the dataframe into a tidy(?) format for plotting (long format!)
@@ -168,26 +135,26 @@ def convert_to_long_format(multi_df):
 
     return plot_df
 
-
-## Aggregate all the plot_datfframes
-def aggregate_all_latency_dfs(df_list):
-    if not isinstance(df_list, (list)):
-        raise TypeError("Enter in list of dataframes")
-
-    all_latency_df = pd.concat(df_list, axis=0)
-
-    return all_latency_df
-
-
-
-### ### ### ### ### ###
+# NOT NEEDED (3/12/2020)
+# ## Aggregate all the plot_datfframes
+# def aggregate_all_latency_dfs(df_list):
+#     if not isinstance(df_list, (list)):
+#         raise TypeError("Enter in list of dataframes")
+#
+#     all_latency_df = pd.concat(df_list, axis=0)
+#
+#     return all_latency_df
 
 
-### ### ### ORIGINAL Reward Reponse + Reward Retrieval Function ### ### ###
+
+### - - - ### - - - ### SINGLE_CDF ### - - - ### - - - ###
+
+
+### ### ### ORIGINAL Reward Reponse Latency Function### ### ###
 
 # Reward Response Latency
 
-def plot_m_latency_cdf(m_latency_df, start_parsetime, control_list, exp_list, threshold=5000, plot_dropped_box=True, valid_trials=True, horizontal=0.9, vertical=0, port_loc='all'):
+def plot_single_latency_cdf(m_latency_df, start_parsetime, control_list, exp_list, threshold=5000, plot_dropped_box=True, valid_trials=True, horizontal=0.9, vertical=0, port_loc='all'):
     """
     :param m_latency_df:
     :param start_parsetime:
@@ -287,6 +254,112 @@ def plot_m_latency_cdf(m_latency_df, start_parsetime, control_list, exp_list, th
     return fig, ax
 
 
-# Reward Retrieval Latency
+### - - - ### - - - ### AGGREGATED_CDF ### - - - ### - - - ###
+
+
+### ### Aggregating Response Latencies ### ###
+
+def vertically_stack_all_latency_df(files_list):
+    result = []
+    for i in range(len(files_list)):
+        f = files_list[i]
+        # print(f)
+        df = pd.read_excel(f, index_col=0)   # read_csv can also read in txt files!
+        result.append(df)
+
+    stacked_df = pd.concat(result, axis=0).reset_index(drop=True)
+
+    return stacked_df
+
+
+### NEED TO DO: 3/12 before switching mice
+### NEED TO ACTUALLY DROP BOX NUMBERS HERE!!
+## INCLUDE GROUP INFORMATION& Age information!!
+
+def plot_agg_latency_cdf(stacked_df, control_list, exp_list, threshold=5000, plot_dropped_box=True, valid_trials=True, horizontal=0.9, vertical=0, port_loc='all'):
+    # date_year = start_parsetime[:10]
+    # date_year = date_year.replace("/", "-")
+
+    ## Plotting
+    fig, ax = plt.subplots(figsize=(8, 6))
+    # box_arr = m_latency_df.columns.levels[0]#.levels[1]
+
+    box_arr = stacked_df['Box Number'].unique()
+
+
+    for i in range(len(box_arr)):  # for all the boxes in box_array
+        box_num = box_arr[i]
+
+        ind_df = m_latency_df.loc[:, box_num]
+        ind_df = ind_df.dropna(how='all')
+
+        # # Filter by threshold first
+        filtered_latency_df = ind_df[ind_df.latency < int(threshold)]
+
+        # # Filter by valid / invalid trials
+        if valid_trials:
+            valid_trials_df = filtered_latency_df[filtered_latency_df.event_code.str[-2:] == '70']
+
+            if port_loc.lower() == 'all':
+                x, y = ecdf(valid_trials_df.latency)
+                title_string = "(Valid) Trials - (All) Ports"
+
+            elif port_loc.lower() == 'left':
+                left_df = valid_trials_df[valid_trials_df.location == '7']
+                x, y = ecdf(left_df.latency)
+                title_string = "(Valid) Trials - (Left) Port"
+
+            elif port_loc.lower() == 'right':
+                right_df = valid_trials_df[valid_trials_df.location == '9']
+                x, y = ecdf(right_df.latency)
+                title_string = "(Valid) Trials - (Right) Port"
+            else:
+                raise InputError("Invalid Port Input:", "Select valid port location")
+
+
+        else:
+            invalid_trials_df = filtered_latency_df[filtered_latency_df.event_code.str[-2:] == '60']
+
+            if port_loc.lower() == 'all':
+                x, y = ecdf(invalid_trials_df.latency)
+                title_string = "(Invalid) Trials - (All) Ports"
+
+            elif port_loc.lower() == 'left':
+                left_df = invalid_trials_df[invalid_trials_df.location == '7']
+                x, y = ecdf(left_df.latency)
+                title_string = "(Invalid) Trials - (Left) Port"
+
+            elif port_loc.lower() == 'right':
+                right_df = invalid_trials_df[invalid_trials_df.location == '9']
+                x, y = ecdf(right_df.latency)
+                title_string = "(Invalid) Trials - (Right) Port"
+            else:
+                raise InputError("Invalid Port Input:", "Select valid port location")
+
+        control = set(control_list)  # using a set
+        experiment = set(exp_list)
+        combined_set = control.union(experiment)
+
+        ## Remember, the function is going through a FOR loop to check conditions / return x,y for EVERY box number!
+        if box_num in control:
+            # colors = plt.cm.Blues(np.linspace(0,1,5*len(adults)))  # color map test
+            plt.plot(x, y, marker='.', linestyle='none', ms=5, color='red', label=box_num)
+        elif box_num in experiment:
+            plt.plot(x, y, marker='.', linestyle='none', ms=5, color='blue', label=box_num)
+
+        # plots in green IF box_number contained in the original csv_concat file but NOT in the user-inputted list (from xBasic_Group_Info)
+        if plot_dropped_box:
+            if box_num not in combined_set:
+                plt.plot(x, y, marker='.', linestyle='none', ms=5, color='green', label=box_num)
+        else:
+            pass
+
+    plt.legend(loc='best', bbox_to_anchor=(1.01, 1.01))
+    plt.axhline(float(horizontal), linewidth=1)
+    plt.axvline(float(vertical), linewidth=1)
+
+    plt.xlim([0, int(threshold)])
+
+    return fig, ax
 
 

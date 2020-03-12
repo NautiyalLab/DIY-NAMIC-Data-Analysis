@@ -1,31 +1,34 @@
-from Step1a_timeframe_parsing import *
+from Step0a_file_concatenate import *
 from Tkinter_Selection import *
-from Step8b_agg_latency_plotting import *
+from Step8b_reward_response_latency import *
 from xBasic_Group_Info import *
 
 
-### INPUT: Folder containing latency values per day
+### INPUT: Folder containing latency values by day
 
 ### AGGREGATED CDF values (already parsed out y timeframe) --> need to concatenate (vertically stack the dataframes!)
-
-## Required Variables for getting multi_df
-columns = ['event_string', 'event_code', 'timestamp', 'counter']
-
-## Basic Information on Trials (Start and End of Trials)
-trial_start = ['7171','9171']
-trial_end = ['7170','7160','7540','9170','9160','9540']
 
 
 ##### Actual RUN ##### Actual RUN ##### Actual RUN #####
 
 ## Select ALL files in a single directory (with latency excel files!)
-## Refer to Step0F
-file_path = select_all_files_in_directory()
+# Refer to Step0F
+files_list, dir_title = select_all_files_in_directory()
 
+stacked_df = vertically_stack_all_latency_df(files_list)
 
+# stacked_df.to_excel("test.xlsx")
+# print(stacked_df)
 
-
-print(file_path)
+# col_names = ['event_code', 'timestamp', 'counter']
+#
+# (files_list, selected_dir_title) = select_all_files_in_directory()
+# box_numbers = get_box_numbers(files_list)
+#
+# # # returns multi_df and its future title
+# (df, title) = return_multilevel_df_to_csv(files_list, box_numbers, col_names, selected_dir_title)
+#
+# print(df)
 
 
 # ## Get the multilevel dataframe (from Step 1)
@@ -43,10 +46,18 @@ print(file_path)
 
 
 
+
+
+
+
+
+
+
+
 ## Plotting
-# fig, ax = plot_m_latency_cdf(m_latency_df, start_parsetime, control_list, exp_list, threshold=3000, valid_trials=True, horizontal=0.9, port_loc='all')
+fig, ax = plot_agg_latency_cdf(stacked_df, control_list, exp_list, threshold=3000, valid_trials=True, horizontal=0.9, port_loc='all')
 #
 #
 # # print((fig, ax))
-# plt.tight_layout()
-# plt.show()
+plt.tight_layout()
+plt.show()
