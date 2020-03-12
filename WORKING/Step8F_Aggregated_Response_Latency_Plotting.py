@@ -3,11 +3,10 @@ from Tkinter_Selection import *
 from Step8a_latency_plotting import *
 from xBasic_Group_Info import *
 
-### AGGREGATED CDF values (already parsed out y timeframe) --> need to concatenate (vertically stack the dataframes!)
 
-# ## Input Start-Time & End-Time for Latency Plotting
-# start_parsetime = input("Enter start-time for LATENCY Plotting (YYYY/MM/DD HH:MM) ").strip()
-# end_parsetime = input("Enter end-time for LATENCY Plotting (YYYY/MM/DD HH:MM) ").strip()
+### INPUT: Folder containing latency values per day
+
+### AGGREGATED CDF values (already parsed out y timeframe) --> need to concatenate (vertically stack the dataframes!)
 
 ## Required Variables for getting multi_df
 columns = ['event_string', 'event_code', 'timestamp', 'counter']

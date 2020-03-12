@@ -9,6 +9,7 @@ matplotlib.use("TkAgg")
 from matplotlib import pyplot as plt
 
 
+### INPUT: Summary Excel File
 
 ## Select single csv file (Summary Excel File)
 file_path = select_single_file()
