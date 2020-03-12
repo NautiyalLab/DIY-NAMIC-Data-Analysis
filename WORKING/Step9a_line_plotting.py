@@ -103,7 +103,7 @@ def get_means_by_group(plot_df, control_group, control_list, exp_group, exp_list
 def plot_grouped_df(plot_df, control_group, control_list, exp_group, exp_list, subject_list, paradigms=None):
     """
 
-    :param plot_df:
+    :param plot_df: determines the actual subjects (plot_df.columns.tolist())
     :param control_group:
     :param control_list:
     :param exp_group:
@@ -114,14 +114,14 @@ def plot_grouped_df(plot_df, control_group, control_list, exp_group, exp_list, s
     """
 
     ## Full_list will return the original box_numbers
-    full_list = plot_df.columns.tolist()
+    box_full_list = plot_df.columns.tolist()
 
     ## Mean_df will be the actual dataframe that will be plotted!
-    mean_df = get_means_by_group(plot_df, control_group, control_list, exp_group, exp_list, )
+    mean_df = get_means_by_group(plot_df, control_group, control_list, exp_group, exp_list)
 
     ## This is for the "leftover" box that will be plotted in different color
     combined_set = set(control_list).union(set(exp_list))
-    leftover_set = set(full_list).difference(combined_set)
+    leftover_set = set(box_full_list).difference(combined_set)
 
     # Plotting the MEAN_DF!!
     fig, ax = plt.subplots(figsize=(12, 9))
@@ -146,11 +146,18 @@ def plot_grouped_df(plot_df, control_group, control_list, exp_group, exp_list, s
     plt.errorbar(x=mean_df.index, y=mean_df[control_group + " Avg"], yerr=mean_df[control_group + " Sem"], c='red')
     plt.errorbar(x=mean_df.index, y=mean_df[exp_group + " Avg"], yerr=mean_df[exp_group + " Sem"], c='blue')
 
-    ## Legend Plotting
-    subject_list.append(control_group + " Avg")
-    subject_list.append(exp_group + " Avg")
+    ## Getting the accurate legend (after dropping appropriate boxes)
 
-    plt.legend(subject_list,
+    new_list = [int(i)-1 for i in box_full_list]
+    final_subject_list = []
+    for i in new_list:
+        final_subject_list.append(subject_list[i])
+
+    ## Append the averages at the end
+    final_subject_list.append(control_group + " Avg")
+    final_subject_list.append(exp_group + " Avg")
+
+    plt.legend(final_subject_list,
                loc='upper center', bbox_to_anchor=(1.08, 1.02))
 
 

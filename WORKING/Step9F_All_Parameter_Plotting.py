@@ -20,8 +20,10 @@ timeframe = file_name.split(".")[0].split("_")[-2]  ### CHANGE HERE IF NECESSARY
 ### Return summary_df from excel file (returns all sheets) (result is an ordered dictionary)
 summary_df_dict = return_parameter_dfs_from_summary_excel(file_path)
 
+
+
 ### Paradigm Cutoff dates (vertical lines)
-paradigms = parameter_dates_P5   # CHANGE HERE for paradigm cutoff dates
+paradigms = g4_parameter_dates   # CHANGE HERE for paradigm cutoff dates
 
 
 
@@ -39,7 +41,7 @@ for key, value in summary_df_dict.items():
     i=i+1
     plt.figure(i)
 
-    fig, ax = plot_grouped_df(parameter, control_group, control_list, exp_group, exp_list, subject_list, paradigms=paradigms)
+    fig, ax = plot_grouped_df(parameter, g4_control_group, g4_control_list, g4_exp_group, g4_exp_list, g4_subject_list, paradigms=paradigms)   ## Change HERE!
 
     title_key = key + "_" + timeframe
     title = plot_code_dict[title_key]

@@ -21,27 +21,28 @@ timeframe = file_name.split(".")[0].split("_")[-2]  ### CHANGE HERE IF NECESSARY
 summary_df_dict = return_parameter_dfs_from_summary_excel(file_path)
 
 ### Paradigm Cutoff dates (vertical lines)
-paradigms = parameter_dates_P5   # CHANGE HERE for paradigm cutoff dates
+paradigms = g4_parameter_dates   # CHANGE HERE for paradigm cutoff dates
 
 
 ### ### #### Plotting only ONE parameter! #### ### ###
-#
-# parameter = "pokes_iti_window"   # CHANGE HERE for parameter
-# parameter_df = summary_df_dict[parameter]
-# parameter_df = return_parameter_plot_df(parameter_df)
-#
-# fig, ax = plot_grouped_df(parameter_df, control_group, control_list, exp_group, exp_list, subject_list, paradigms=paradigms)
-#
-# title_key = parameter+"_"+timeframe
-# title = plot_code_dict[title_key]
-# ax.set_title(title, size=20)
-# ax.set_xlabel("Days", fontsize=16)           # CHANGE Accordingly
-# ax.set_ylabel("Counts", fontsize=16)    # CHANGE Accordingly
-#
-# plt.tight_layout()
-#
-# ### Show Plots
-# plt.show()
+
+parameter = "pokes_iti_window"   # CHANGE HERE for parameter
+parameter_df = summary_df_dict[parameter]
+parameter_df = return_parameter_plot_df(parameter_df)
+
+fig, ax = plot_grouped_df(parameter_df, g4_control_group, g4_control_list, g4_exp_group, g4_exp_list, g4_subject_list, paradigms=paradigms)
+
+# print(fig)
+title_key = parameter+"_"+ timeframe
+title = plot_code_dict[title_key]
+ax.set_title(title, size=20)
+ax.set_xlabel("Days", fontsize=16)           # CHANGE Accordingly
+ax.set_ylabel("Counts", fontsize=16)    # CHANGE Accordingly
+
+plt.tight_layout()
+
+### Show Plots
+plt.show()
 
 ### Save Plot
 # plt.savefig(title_key)
