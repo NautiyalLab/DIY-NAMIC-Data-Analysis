@@ -5,8 +5,9 @@ from xBasic_Group_Info import *
 
 
 ### INPUT: Folder containing latency values by day
+### (Folder containing multiple days of latency excel files (outputs of Step8F_Single_Day_Response_Latency_Plotting)
 
-### AGGREGATED CDF values (already parsed out y timeframe) --> need to concatenate (vertically stack the dataframes!)
+### Combining over days! - CDF values (already parsed out y timeframe) --> need to concatenate (vertically stack the dataframes!)
 
 
 ##### Actual RUN ##### Actual RUN ##### Actual RUN #####

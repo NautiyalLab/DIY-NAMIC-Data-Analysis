@@ -7,6 +7,12 @@ from Code_Dictionaries import *
 
 ### INPUT: concatenated csv data AFTER Step 0  (_concat suffix)
 
+### IMPT NOTE on the outputted Excel File:
+## --> last two digits in event_code column will determine if the poke is correct (valid) or incorrect (invalid)
+## If last two digits are "70": then correct trials
+## If last two digits are "60": then incorrect trials
+## Will not contain any omission trials! (by definition of latency, can NOT contain any latency data on omission trials)
+
 ### THIS Script SAVES and also PLOTS!
 
 ## Input Group # & Start-Time & End-Time for Latency Plotting  (PARSING)
@@ -63,7 +69,7 @@ m_latency_df = return_multi_response_latency_df(m_parsed_dt_df, trial_start, tri
 save_title = start_parsetime[:10].replace("/","-") + "_latency.xlsx"
 plot_df = convert_to_long_format(m_latency_df)
 plot_df['Group'] = group   # Adding Group Information!
-plot_df = create_subject_column(plot_df, group_subject_list)  # Creates subject columns! 
+plot_df = create_subject_column(plot_df, group_subject_list)  # Creates subject columns!
 
 # print(plot_df.dtypes)
 
