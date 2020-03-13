@@ -100,7 +100,7 @@ def convert_index_code_to_string(df):
     new_df = new_df.set_index('new_idx')
 
     del new_df.index.name  # When using pandas 0.25, can retain this line // If using pandas 1.0, comment this line out!!)
-                           # Update: 3/12/2 --> Need to use pandas=0.25!! thus retain this line! 
+                           # Update: 3/12/2 --> Need to use pandas=0.25!! thus retain this line!
     # try:
     #     del new_df.index.name
     # except AttributeError:

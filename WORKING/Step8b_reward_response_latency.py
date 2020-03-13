@@ -5,11 +5,11 @@ import pandas as pd
 import matplotlib
 matplotlib.use("TkAgg")
 
-from matplotlib.dates import DateFormatter
 from matplotlib import pyplot as plt
 
-from datetime import datetime
 from Step8a_cdf_functions import *
+from xBasic_Group_Info import *
+
 
 
 #### Necessary Information
@@ -145,6 +145,15 @@ def convert_to_long_format(multi_df):
 #
 #     return all_latency_df
 
+## Creating subject columns for the single_cdf excel files!
+def create_subject_column(plot_df, group_subject_list):
+    ## Subject Index list will be a global variable!!
+    for i in subject_idx_list:
+        box_num = str(i + 1)  # box number in strings!
+
+        plot_df.loc[plot_df['Box Number'] == box_num, "Subject"] = group_subject_list[i]
+
+    return plot_df
 
 
 ### - - - ### - - - ### SINGLE_CDF ### - - - ### - - - ###
@@ -270,10 +279,6 @@ def vertically_stack_all_latency_df(files_list):
     stacked_df = pd.concat(result, axis=0).reset_index(drop=True)
 
     return stacked_df
-
-
-### NEED TO DO: 3/12 before switching mice
-### NEED TO ACTUALLY DROP BOX NUMBERS HERE!!
 
 
 def plot_agg_latency_cdf(stacked_df, control_group, control_list, exp_group, exp_list, exclude_box_list, valid_trials=True, threshold=5000, horizontal=0.9, vertical=0, port_loc='all'):

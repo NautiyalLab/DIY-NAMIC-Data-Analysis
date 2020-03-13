@@ -1,26 +1,30 @@
 
 ### This file contains ALL the basic information about a group! (used mainly for plotting purposes)
 
+## Box List --> will be used sometimes to index into the actual subject list!
+box_list = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']  # All the boxes used in the experiment
+subject_idx_list = [int(i) - 1 for i in box_list]
+
 ## Group 3: Exclude Box #6
 g3_control_group = "Adults"                       ## Change Here
 g3_control_list = ['1','2','3','4','5']           ## Change Here (in boxes)
 g3_exp_group = "Adols"                            ## Change Here
-g3_exp_list = ['7','8','9','10']              ## Change Here (in boxes)
+g3_exp_list = ['7','8','9','10']                  ## Change Here (in boxes)
 
 ## Group 4: Exclude Box #3
 g4_control_group = "Adults"                       ## Change Here
-g4_control_list = ['1','2','4','5']           ## Change Here (in boxes)
+g4_control_list = ['1','2','4','5']               ## Change Here (in boxes)
 g4_exp_group = "Adols"                            ## Change Here
 g4_exp_list = ['6','7','8','9','10']              ## Change Here (in boxes)
 
 ## Group 5
-g5_control_group = "BActin Neg"                       ## Change Here
+g5_control_group = "BActin Neg"                   ## Change Here
 g5_control_list = ['1','2','3','4','5']           ## Change Here (in boxes)
-g5_exp_group = "BActin Pos"                            ## Change Here
+g5_exp_group = "BActin Pos"                       ## Change Here
 g5_exp_list = ['6','7','8','9','10']              ## Change Here (in boxes)
 
 
-# Actual Subject Numbers
+# Actual Subject Numbers  (Do NOT drop any subjects from this original list!!)
 g3_subject_list = ['800','801','802','825','826','853','854','855','856','857']
 g4_subject_list = ['844','845','846','847','852','870','871','872','873','869']
 g5_subject_list = ['1675','1680','1681','1682','1684','1674','1677','1679','1683','1687']

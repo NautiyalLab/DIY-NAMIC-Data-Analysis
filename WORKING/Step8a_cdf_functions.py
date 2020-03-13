@@ -40,12 +40,3 @@ def ecdf(data):
 
     return x, y
 
-## Simple CDF Function
-
-def plot_cdf(control_x, control_y, exp_x, exp_y):
-    fig, ax = plt.subplots()
-
-    ax.plot(control_x, control_y, marker=".", linestyle='none', ms=5, color='red', label="Control Group")
-    ax.plot(exp_x, exp_y, marker=".", linestyle='none', ms=5, color='blue', label="Experimental Group")
-
-    ax.legend(loc='best', bbox_to_anchor=(1.01, 1.01))
