@@ -13,6 +13,9 @@ ___
 - All GUI-related functions are contained within `Tkinter_Selection.py` script.
 
 ### How to Run
+**IMPORTANT NOTE!**
+Use pandas=0.25 to run the data analysis codes!! - There are some changes between 0.25 and 1.0 that crash the codebase if using pandas>=1.0 
+
 
 #### Step0: Concatenate_all_txt_files (Raw_Processing_Files)
 - Input: Selected Folder (raw processing files)
