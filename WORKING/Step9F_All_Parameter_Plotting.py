@@ -8,6 +8,11 @@ import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib import pyplot as plt
 
+### IMPORTANT: Do NOT Change the title format!!! (ex: dark_Summary / 23hr_Summary)
+### The location of words in the title serve an IMPORTANT part of the dictionary key!
+
+## "Dark" / "23hr" serve as keys to the parameters in the dictionary!!
+
 
 ### INPUT: Summary Excel File
 
@@ -32,8 +37,8 @@ paradigms = g4_parameter_dates   # CHANGE HERE for paradigm cutoff dates
 
 # Reference: [Multiple Plots in separate windows](https://stackoverflow.com/questions/42430260/is-it-possible-to-show-multiple-plots-in-separate-windows-using-matplotlib)
 
-i = 0
 
+i = 0
 for key, value in summary_df_dict.items():
 
     # name = k+"_graph"

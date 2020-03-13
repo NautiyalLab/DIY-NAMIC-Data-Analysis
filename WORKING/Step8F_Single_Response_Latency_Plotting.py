@@ -59,7 +59,7 @@ m_latency_df = return_multi_response_latency_df(m_parsed_dt_df, trial_start, tri
 
 save_title = start_parsetime[:10].replace("/","-") + "_latency.xlsx"
 plot_df = convert_to_long_format(m_latency_df)
-plot_df['Group'] = group
+plot_df['Group'] = group   # Adding Group Information!
 
 ## Saving Individual latency df to long format!
 plot_df.to_excel(save_title)
@@ -79,3 +79,6 @@ ax.set_xlabel("Latency (ms)", fontsize=14)
 
 plt.tight_layout()
 plt.show()
+
+## Save Here!
+# plt.savefig("Whatever title you want")

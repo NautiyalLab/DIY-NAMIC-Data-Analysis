@@ -274,85 +274,104 @@ def vertically_stack_all_latency_df(files_list):
 
 ### NEED TO DO: 3/12 before switching mice
 ### NEED TO ACTUALLY DROP BOX NUMBERS HERE!!
-## INCLUDE GROUP INFORMATION& Age information!!
 
-def plot_agg_latency_cdf(stacked_df, control_list, exp_list, threshold=5000, plot_dropped_box=True, valid_trials=True, horizontal=0.9, vertical=0, port_loc='all'):
-    # date_year = start_parsetime[:10]
-    # date_year = date_year.replace("/", "-")
+
+def plot_agg_latency_cdf(stacked_df, control_group, control_list, exp_group, exp_list, exclude_box_list, valid_trials=True, threshold=5000, horizontal=0.9, vertical=0, port_loc='all'):
+    """
+    :param stacked_df:
+    :param exclude_box: (in dictionary)
+    :param threshold:
+    :param plot_dropped_box:
+    :param valid_trials:
+    :param horizontal:
+    :param vertical:
+    :param port_loc:
+    :return:
+    """
+
+    ## Drop appropriate boxes first!! (from exclude box list)
+    final_excluded_df = stacked_df.copy()
+    for i in range(len(exclude_box_list)):
+        group = exclude_box_list[i][0]
+
+        box = exclude_box_list[i][1]
+        final_excluded_df = final_excluded_df.drop(final_excluded_df[(final_excluded_df.Group == group) & (final_excluded_df['Box Number'] == box)].index)
+
+
+    ## Adding in the Control vs. Exp Component! (ex: Age / BActin pos, neg)
+    final_excluded_df['Control vs Exp'] = ""
+
+    ## Populating the Control vs. Exp according to control_list / exp_list
+    final_excluded_df.loc[final_excluded_df['Box Number'].isin(control_list), 'Control vs Exp'] = control_group
+    final_excluded_df.loc[final_excluded_df['Box Number'].isin(exp_list), 'Control vs Exp'] = exp_group
+
+
 
     ## Plotting
     fig, ax = plt.subplots(figsize=(8, 6))
-    # box_arr = m_latency_df.columns.levels[0]#.levels[1]
 
-    box_arr = stacked_df['Box Number'].unique()
+    ## Filter for Valid Trials & Location
+    if valid_trials:
+        valid_trials_df = final_excluded_df[final_excluded_df.event_code.str[-2:] == '70']
+        if port_loc.lower() == 'all':
+            control_df = valid_trials_df[valid_trials_df['Control vs Exp'] == control_group]
+            exp_df = valid_trials_df[valid_trials_df['Control vs Exp'] == exp_group]
+            control_x, control_y = ecdf(control_df.latency)
+            exp_x, exp_y = ecdf(exp_df.latency)
 
+        elif port_loc.lower() == 'left':
+            left_valid_df = valid_trials_df[valid_trials_df.location == '7']
+            control_df = left_valid_df[left_valid_df['Control vs Exp'] == control_group]
+            exp_df = left_valid_df[left_valid_df['Control vs Exp'] == exp_group]
+            control_x, control_y = ecdf(control_df.latency)
+            exp_x, exp_y = ecdf(exp_df.latency)
 
-    for i in range(len(box_arr)):  # for all the boxes in box_array
-        box_num = box_arr[i]
-
-        ind_df = m_latency_df.loc[:, box_num]
-        ind_df = ind_df.dropna(how='all')
-
-        # # Filter by threshold first
-        filtered_latency_df = ind_df[ind_df.latency < int(threshold)]
-
-        # # Filter by valid / invalid trials
-        if valid_trials:
-            valid_trials_df = filtered_latency_df[filtered_latency_df.event_code.str[-2:] == '70']
-
-            if port_loc.lower() == 'all':
-                x, y = ecdf(valid_trials_df.latency)
-                title_string = "(Valid) Trials - (All) Ports"
-
-            elif port_loc.lower() == 'left':
-                left_df = valid_trials_df[valid_trials_df.location == '7']
-                x, y = ecdf(left_df.latency)
-                title_string = "(Valid) Trials - (Left) Port"
-
-            elif port_loc.lower() == 'right':
-                right_df = valid_trials_df[valid_trials_df.location == '9']
-                x, y = ecdf(right_df.latency)
-                title_string = "(Valid) Trials - (Right) Port"
-            else:
-                raise InputError("Invalid Port Input:", "Select valid port location")
-
+        elif port_loc.lower() == 'right':
+            right_valid_df = valid_trials_df[valid_trials_df.location == '9']
+            control_df = right_valid_df[right_valid_df['Control vs Exp'] == control_group]
+            exp_df = right_valid_df[right_valid_df['Control vs Exp'] == exp_group]
+            control_x, control_y = ecdf(control_df.latency)
+            exp_x, exp_y = ecdf(exp_df.latency)
 
         else:
-            invalid_trials_df = filtered_latency_df[filtered_latency_df.event_code.str[-2:] == '60']
+            raise InputError("Invalid Port Input:", "Select valid port location")
 
-            if port_loc.lower() == 'all':
-                x, y = ecdf(invalid_trials_df.latency)
-                title_string = "(Invalid) Trials - (All) Ports"
 
-            elif port_loc.lower() == 'left':
-                left_df = invalid_trials_df[invalid_trials_df.location == '7']
-                x, y = ecdf(left_df.latency)
-                title_string = "(Invalid) Trials - (Left) Port"
+    else:
+        invalid_trials_df = final_excluded_df[final_excluded_df.event_code.str[-2:] == '60']
 
-            elif port_loc.lower() == 'right':
-                right_df = invalid_trials_df[invalid_trials_df.location == '9']
-                x, y = ecdf(right_df.latency)
-                title_string = "(Invalid) Trials - (Right) Port"
-            else:
-                raise InputError("Invalid Port Input:", "Select valid port location")
+        if port_loc.lower() == 'all':
+            control_df = invalid_trials_df[invalid_trials_df['Control vs Exp'] == control_group]
+            exp_df = invalid_trials_df[invalid_trials_df['Control vs Exp'] == exp_group]
+            control_x, control_y = ecdf(control_df.latency)
+            exp_x, exp_y = ecdf(exp_df.latency)
 
-        control = set(control_list)  # using a set
-        experiment = set(exp_list)
-        combined_set = control.union(experiment)
+        elif port_loc.lower() == 'left':
+            left_invalid_df = invalid_trials_df[invalid_trials_df.location == '7']
+            control_df = left_invalid_df[left_invalid_df['Control vs Exp'] == control_group]
+            exp_df = left_invalid_df[left_invalid_df['Control vs Exp'] == exp_group]
+            control_x, control_y = ecdf(control_df.latency)
+            exp_x, exp_y = ecdf(exp_df.latency)
 
-        ## Remember, the function is going through a FOR loop to check conditions / return x,y for EVERY box number!
-        if box_num in control:
-            # colors = plt.cm.Blues(np.linspace(0,1,5*len(adults)))  # color map test
-            plt.plot(x, y, marker='.', linestyle='none', ms=5, color='red', label=box_num)
-        elif box_num in experiment:
-            plt.plot(x, y, marker='.', linestyle='none', ms=5, color='blue', label=box_num)
+        elif port_loc.lower() == 'right':
+            right_invalid_df = invalid_trials_df[invalid_trials_df.location == '9']
+            control_df = right_invalid_df[right_invalid_df['Control vs Exp'] == control_group]
+            exp_df = right_invalid_df[right_invalid_df['Control vs Exp'] == exp_group]
+            control_x, control_y = ecdf(control_df.latency)
+            exp_x, exp_y = ecdf(exp_df.latency)
 
-        # plots in green IF box_number contained in the original csv_concat file but NOT in the user-inputted list (from xBasic_Group_Info)
-        if plot_dropped_box:
-            if box_num not in combined_set:
-                plt.plot(x, y, marker='.', linestyle='none', ms=5, color='green', label=box_num)
         else:
-            pass
+            raise InputError("Invalid Port Input:", "Select valid port location")
+
+    # control = set(control_list)  # using a set
+    # experiment = set(exp_list)
+    # # combined_set = control.union(experiment)
+
+    ax.plot(control_x, control_y, marker=".", linestyle='none', ms=5, color='red', label=control_group)
+    ax.plot(exp_x, exp_y, marker=".", linestyle='none', ms=5, color='blue', label=exp_group)
+
+    ax.legend(loc='best', bbox_to_anchor=(1.01, 1.01))
+
 
     plt.legend(loc='best', bbox_to_anchor=(1.01, 1.01))
     plt.axhline(float(horizontal), linewidth=1)
@@ -361,5 +380,4 @@ def plot_agg_latency_cdf(stacked_df, control_list, exp_list, threshold=5000, plo
     plt.xlim([0, int(threshold)])
 
     return fig, ax
-
 

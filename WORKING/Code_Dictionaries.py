@@ -58,6 +58,7 @@ plot_code_dict = {"pokes_delay_window_dark": "Pokes during the Delay Window",
                   "trials_incorrect_23hr": "Total Number of Incorrect Trials (23 hours)",
                   "trials_initiated_23hr" : "Total Number of Initiated Trials (23 hours)",
                   "trials_omission_23hr":"Total Number of Omission Trials (23 hours)",
+                  "trials_reward_23hr": "Total Number of Rewards (23 hours)",
                   "trials_valid_ports_23hr": "Total Pokes in Valid Ports (23 hrs)",
 
 
