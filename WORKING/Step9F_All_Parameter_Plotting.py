@@ -60,7 +60,8 @@ plt.tight_layout()
 ### Show Plots
 plt.show()
 
-# plt.savefig
 
+### Save Plot
+# plt.savefig(title_key + ".png")
 
 

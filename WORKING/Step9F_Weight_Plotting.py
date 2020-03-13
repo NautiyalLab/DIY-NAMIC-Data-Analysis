@@ -29,6 +29,8 @@ ax.set_xlabel("Days", fontsize=16)
 ax.set_ylabel("Weights (g)", fontsize=16)
 
 plt.tight_layout()
+
+## Show Graph
 plt.show()
 
 ## Save the graph

@@ -35,12 +35,20 @@ exp_list = ['6','7','8','9','10']
 # ## Plotting
 fig, ax = plot_agg_latency_cdf(stacked_df, control_group, control_list, exp_group, exp_list, exclude_box_list, valid_trials=True, threshold=5000, horizontal=0.9, port_loc='all')
 #
-#
-# # print((fig, ax))
+
+ax.set_title("Aggregated (G3 & G4) Reward Response Latency CDF", fontsize=16)
+
+ax.set_ylabel("Cumulative Density", fontsize=14)
+ax.set_xlabel("Latency (ms)", fontsize=14)
+
+## Show!
 plt.tight_layout()
 plt.show()
 
 
 
+
+
 ## Save Here!
-# plt.savefig("Whatever title you want")
+# plt.tight_layout()
+# plt.savefig("Aggregated CDF")
