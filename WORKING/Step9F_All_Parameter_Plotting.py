@@ -13,6 +13,41 @@ from matplotlib import pyplot as plt
 
 ## "Dark" / "23hr" serve as keys to the parameters in the dictionary!!
 
+## Input Group # & Start-Time & End-Time for Latency Plotting  (PARSING)
+group_number = input("Which group is this? (Ex: g3) ").strip().lower()
+
+### Determining Groups automatically!! (Expand this as groups increase!!)
+
+if group_number == "g3":
+    group = "Group 3"
+    control_group = g3_control_group
+    exp_group = g3_exp_group
+    control_list = g3_control_list
+    exp_list = g3_exp_list
+    group_subject_list = g3_subject_list
+    parameter_dates = g3_parameter_dates
+
+elif group_number == "g4":
+    group = "Group 4"
+    control_group = g3_control_group
+    exp_group = g3_exp_group
+    control_list = g4_control_list
+    exp_list = g4_exp_list
+    group_subject_list = g4_subject_list
+    parameter_dates = g4_parameter_dates
+
+elif group_number == "g5":
+    group = "Group 5"
+    control_group = g3_control_group
+    exp_group = g3_exp_group
+    control_list = g5_control_list
+    exp_list = g5_exp_list
+    group_subject_list = g5_subject_list
+    parameter_dates = g5_parameter_dates
+
+else:
+    raise ValueError("Enter a valid group number (G3/G4/G5) ")
+
 
 ### INPUT: Summary Excel File
 
@@ -27,10 +62,8 @@ timeframe = file_name.split(".")[0].split("_")[-2]  ### CHANGE HERE IF NECESSARY
 summary_df_dict = return_parameter_dfs_from_summary_excel(file_path)
 
 
-
 ### Paradigm Cutoff dates (vertical lines)
-paradigms = g4_parameter_dates   # CHANGE HERE for paradigm cutoff dates
-
+# paradigms = g5_parameter_dates   # CHANGE HERE for paradigm cutoff dates
 
 
 ### ### #### Plotting ALL parameters! #### ### ###
@@ -47,7 +80,7 @@ for key, value in summary_df_dict.items():
     i=i+1  # increment to generate a new window
     plt.figure(i)
 
-    fig, ax = plot_grouped_df(parameter, g4_control_group, g4_control_list, g4_exp_group, g4_exp_list, g4_subject_list, paradigms=paradigms)   ## Change HERE!
+    fig, ax = plot_grouped_df(parameter, control_group, control_list, exp_group, exp_list, group_subject_list, paradigms=parameter_dates)   ## Change HERE!
 
     title_key = key + "_" + timeframe
     title = plot_code_dict[title_key]

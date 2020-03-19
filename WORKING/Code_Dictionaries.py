@@ -66,10 +66,10 @@ plot_code_dict = {"pokes_delay_window_dark": "Pokes during the Delay Window",
                   "pct_23hr": "Percentage of Correct Trials (23hr)",
                   "inc_pct_dark": "Percentage of Incorrect Trials",
                   "ipct_23hr": "Percentage of Incorrect Trials (23hrs)",
-                  "correct_attempted_23hr": "Percentage of Correct Attempted Trials (23hr)",
-                  "correct_attempted_dark": "Percentage of Correct Attempted Trials",
-                  "incorrect_attempted_23hr": "Percentage of Incorrect Attempted Trials (23hr)",
-                  "incorrect_attempted_dark": "Percentage of Incorrect Attempted Trials"
+                  "correct_attempted_pct_23hr": "Percentage of Correct Attempted Trials (23hr)",
+                  "correct_attempted_pct_dark": "Percentage of Correct Attempted Trials",
+                  "incorrect_attempted_pct_23hr": "Percentage of Incorrect Attempted Trials (23hr)",
+                  "incorrect_attempted_pct_dark": "Percentage of Incorrect Attempted Trials"
             }
 
 

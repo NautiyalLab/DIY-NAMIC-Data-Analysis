@@ -19,7 +19,7 @@ g4_exp_list = ['6','7','8','9','10']              ## Change Here (in boxes)
 
 ## Group 5
 g5_control_group = "BActin Neg"                   ## Change Here
-g5_control_list = ['1','2','3','4','5']           ## Change Here (in boxes)
+g5_control_list = ['1','3','4','5']           ## Change Here (in boxes)
 g5_exp_group = "BActin Pos"                       ## Change Here
 g5_exp_list = ['6','7','8','9','10']              ## Change Here (in boxes)
 
