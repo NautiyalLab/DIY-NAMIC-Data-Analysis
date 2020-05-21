@@ -25,7 +25,7 @@ def return_multi_header_dict(multi_df):
         ind_df = ind_df.dropna(how='all')
 
         ## Header information from Processing side! (thus, incorrect input into Processing will return incorrect output)
-        start_code_idx = ind_df.index[ind_df.event_code.isin(['0113','113'])].tolist()[0]  # the list will only contain ONE element
+        start_code_idx = ind_df.index[ind_df.event_code.isin(['0113','113'])].tolist()[0]  # the list will only contain ONE element)
         end_date_info = ind_df[-2:]  # last two rows will always be end date info
 
         head = ind_df[:start_code_idx]

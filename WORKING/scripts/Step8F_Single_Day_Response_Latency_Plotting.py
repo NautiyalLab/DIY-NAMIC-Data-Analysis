@@ -56,8 +56,11 @@ multi_df = get_multi_df(file_path)
 
 ## Final Wrapper Function (from Step 1 #7)
 (m_head_dict, m_parsed_dt_df) = final_m_header_and_parsed_dt_df(multi_df, columns, start_parsetime, end_parsetime)
-
+print('HEADER',m_head_dict)
+print('PARSED DT', m_parsed_dt_df)
 ## Latency dataframe
+trial_start = ['8171']
+trial_end = ['8170']
 m_latency_df = return_multi_response_latency_df(m_parsed_dt_df, trial_start, trial_end)
 
 

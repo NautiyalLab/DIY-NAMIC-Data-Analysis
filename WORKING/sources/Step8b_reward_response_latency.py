@@ -17,8 +17,8 @@ from xBasic_Group_Info import *
 columns = ['event_string', 'event_code', 'timestamp', 'counter']
 
 ## Basic Information on Trials (Start and End of Trials) (used in xFinal scripts)
-trial_start = ['7171','9171']
-trial_end = ['7170','7160','7540','9170','9160','9540']   # Correct Trial / Incorrect Trial / Omission Trial
+# trial_start = ['7171','9171']
+# trial_end = ['7170','7160','7540','9170','9160','9540']   # Correct Trial / Incorrect Trial / Omission Trial
 
 
 
@@ -36,10 +36,38 @@ def get_i_response_latency(i_df, start_array, end_array):
     """
 
     # make dataframes out of trial start / trial end
+
+    start_code_list = []
+    end_code_list = []
+
+    # must convert out of df? is this efficient?
+
+    for i in range(len(i_df.event_code)):
+        print('hello')
+        print('for i=',i,'event code is',i_df.event_code[i])
+        if i_df.event_code[i] in start_array: # if statements not working
+            start_code_list = i_df[i]
+            start_code_df = pd.DataFrame({'start':[start_code_list]})
+            print('start code test')
+        elif i_df.event_code[i] in end_array: # if statement not working
+            end_code_list = i_df[i]
+            end_code_df = pd.DataFrame({'end': [end_code_list]})
+            print('end code test')
+        else:
+            print('went to pass')
+            pass
+
+    
+    '''
     start_code_df = i_df.loc[i_df.event_code.isin(start_array)]
     end_code_df = i_df.loc[i_df.event_code.isin(end_array)]
-
+'''
     # OUTER IF --> determines FIRST ROW modification
+    print("START", start_code_df)
+    print("start array", start_array)
+    print("END",end_code_df)
+    print('end array', end_array)
+
     if (start_code_df.iloc[0]['timestamp'] <= end_code_df.iloc[0]['timestamp']):
 
         # INNER IF --> determines LAST ROW modification
@@ -82,7 +110,6 @@ def get_i_response_latency(i_df, start_array, end_array):
     code_info_latency = latency_df[['event_code', 'latency', 'location']]
 
     return code_info_latency
-
 
 ### Creating Multi_Latency Dataframe from the individual latency dataframe
 
