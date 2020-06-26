@@ -34,39 +34,14 @@ def get_i_response_latency(i_df, start_array, end_array):
 
     OBJECTIVE: to get a even-numbered dataframe (ex: length of start AND end is identical!)
     """
-
-    # make dataframes out of trial start / trial end
-
-    start_code_list = []
-    end_code_list = []
-
-    # must convert out of df? is this efficient?
-
-    for i in range(len(i_df.event_code)):
-        print('hello')
-        print('for i=',i,'event code is',i_df.event_code[i])
-        if i_df.event_code[i] in start_array: # if statements not working
-            start_code_list = i_df[i]
-            start_code_df = pd.DataFrame({'start':[start_code_list]})
-            print('start code test')
-        elif i_df.event_code[i] in end_array: # if statement not working
-            end_code_list = i_df[i]
-            end_code_df = pd.DataFrame({'end': [end_code_list]})
-            print('end code test')
-        else:
-            print('went to pass')
-            pass
-
-    
-    '''
     start_code_df = i_df.loc[i_df.event_code.isin(start_array)]
     end_code_df = i_df.loc[i_df.event_code.isin(end_array)]
-'''
+
     # OUTER IF --> determines FIRST ROW modification
-    print("START", start_code_df)
-    print("start array", start_array)
-    print("END",end_code_df)
-    print('end array', end_array)
+    # print("START", start_code_df)
+    # print("start array", start_array)
+    # print("END",end_code_df)
+    # print('end array', end_array)
 
     if (start_code_df.iloc[0]['timestamp'] <= end_code_df.iloc[0]['timestamp']):
 
@@ -106,9 +81,7 @@ def get_i_response_latency(i_df, start_array, end_array):
     latency_df = pd.DataFrame(zip(start_time, end_time, event_code), columns=['start_time', 'end_time', 'event_code'])
     latency_df['latency'] = latency_df.end_time - latency_df.start_time
     latency_df['location'] = latency_df.event_code.str[0]
-
     code_info_latency = latency_df[['event_code', 'latency', 'location']]
-
     return code_info_latency
 
 ### Creating Multi_Latency Dataframe from the individual latency dataframe
