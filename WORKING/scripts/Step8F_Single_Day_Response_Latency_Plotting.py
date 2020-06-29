@@ -1,6 +1,5 @@
 from Step1a_timeframe_parsing import *
-# from Step8b_reward_response_latency import *
-from Step8x_WIP_housekeeping import *
+from Step8b_latency import *
 from Tkinter_Selection import *
 from xBasic_Group_Info import *
 from Code_Dictionaries import *
@@ -37,20 +36,13 @@ multi_df = get_multi_df(file_path)
 ## Final Wrapper Function (from Step 1 #7)
 (m_head_dict, m_parsed_dt_df) = final_m_header_and_parsed_dt_df(multi_df, columns, start_parsetime, end_parsetime)
 
-## Latency dataframe
+## Latency calculation
 (trial_start, trial_end) = determine_arrays(paradigm, latency_choice)
-'''
-box_arr = list(m_parsed_dt_df.columns.levels[0])
-for i in range(len(box_arr)):  # for all the boxes in box_array
-    box_num = box_arr[i]
-    i_df = m_parsed_dt_df.loc[:, box_num]
-    df_test = get_i_response_latency(i_df, trial_start, trial_end)
-print('TEST', df_test)'''
 
-m_latency_df = latency_calc(m_parsed_dt_df, trial_start, trial_end)
+m_latency_df = multi_latency_concat(m_parsed_dt_df, trial_start, trial_end)
 
 
-##### SAVE Data for Aggregated Plotting ##### SAVE Data for Aggregated Plotting ##### SAVE Data for Aggregated Plotting #####
+##### SAVE Data for Aggregated Plotting
 
 # Save TO plotting-friendly format!!
 # Objective: In order to concatenate the latency files later!

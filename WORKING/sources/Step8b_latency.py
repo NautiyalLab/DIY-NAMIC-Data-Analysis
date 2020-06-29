@@ -39,11 +39,13 @@ def det_group_number(group_number):
 def determine_arrays(paradigm, latency):
     '''
     Written by SE
+    INPUT: user input for paradigm # and latency type
+    Output: arrays of start/end code selections
     '''
     response_start = [['8171'], ['7171', '9171'], ['8071'], ['8071'], ['8071'], ['7171', '9171']]
     response_end = [['8071'], ['7071', '9071'], ['7071', '9071'], ['7071', '9071'], ['7071', '9071'], ['7071', '9071']]
     retrieval_start =[['0'],['7071', '9071'],['7071', '9071'],['7071', '9071'],['7071', '9071'],['7071', '9071']]
-    retrieval_end =[['0'],['8071'],['8071'],['8071'],['8071'],['8071']] #middle port poke
+    retrieval_end =[['0'],['8071'],['8071'],['8071'],['8071'],['8071']]
     initiation_start = [['0'],['0'],['8171'],['8171'],['8171','7540','8540','9540','7160','8160','9160'],
                         ['8171','7540','8540','9540','7160','8160','9160']]
     initiation_end = [['8071'],['8071'],['8071'],['8071'],['8071'],['8071']]
@@ -61,57 +63,50 @@ def determine_arrays(paradigm, latency):
 
 def get_i_response_latency(i_df, start_array, end_array):
     """
-    Taken from JHL's code
+    Some written by SE, some heavily mod'd from JHL code
     :i_df: individual dataframe parsed out from the multi-level dataframe
-    :start_array: start time code
-    :end_array: end time code
-
-    OBJECTIVE: to get a even-numbered dataframe (ex: length of start AND end is identical!)
+    :start_array: start codes to be used (from determine_arrays)
+    :end_array: end codes to be used (from determine_arrays)
+    OBJECTIVE: to determine start/end times, format inputs, and get individual dataframe with latency info
     """
+    # determine events (rows) in raw data which correspond to start/endpoints for latency calculation
     start_code_df = i_df.loc[i_df.event_code.isin(start_array)]
     end_code_df = i_df.loc[i_df.event_code.isin(end_array)]
 
-    # OUTER IF --> determines FIRST ROW modification
-    #print("START", start_code_df.columns)
-    # print("start array", start_array)
-    #print("END",end_code_df.columns)
-    # print('end array', end_array)
-
     end_timestamp = []
     for n in range(len(start_code_df.event_code)):
-       # print('n range is',range(len(start_code_df.event_code)))
-        #end_time = end_code_df[end_code_df > start_code_df.event_code[n]].min()
+        # pull out start/endpoint timestamps
         end_t_working = end_code_df.loc[:,'timestamp']
-       # print(end_t_working)
         start_t_working = start_code_df.loc[:,'timestamp']
-       # print(start_t_working)
 
-        #for t in end_t_working:
-         #   if t > start_t_working.iloc[n]:
-          #      return t
-          #  else:
-          #      pass
-        nearest_end = min([t for t in end_t_working if t > start_t_working.iloc[n]], default=0)
+        # filter endpoints so that only nearest endpoint to each startpoint is used
+        # (otherwise would have multiple endpoints per startpoint which messes up latency calc)
+        nearest_end = min([t for t in end_t_working if t > start_t_working.iloc[n]], default=np.nan)
         end_timestamp.append(nearest_end)
 
-    end_time_df = end_code_df.loc[end_code_df['timestamp'].isin(end_timestamp)] # maybe something wrong here?
+    # modify endpoint events (rows) to only include endpoints of choice
+    end_time_df = end_code_df.loc[end_code_df['timestamp'].isin(end_timestamp)]
     start_time_df = start_code_df
-   # print('START MODIFIED DF', start_time_df)
-   # print('END MODIFIED DF', end_time_df)
+
+    # construct final individual latency df (from here onwards, modified from JHL code)
     event_code = start_code_df.loc[:, 'event_code']
     start_time = start_time_df.timestamp.tolist()
     end_time = end_time_df.timestamp.tolist()
+
     latency_df = pd.DataFrame(zip(start_time, end_time, event_code), columns=['start_time', 'end_time', 'event_code'])
     latency_df['latency'] = latency_df.end_time - latency_df.start_time
     latency_df['location'] = latency_df.event_code.str[0]
+
+    # only keep relevant info (filter out columns)
     code_info_latency = latency_df[['event_code', 'latency', 'location']]
-    print('CODE_INFO_LATENCY', code_info_latency)
     return code_info_latency
 
 
-def latency_calc(m_body_df, start_array, end_array):
+def multi_latency_concat(m_body_df, start_array, end_array):
     '''
     Adapted from JHL's code
+    INPUT: multi raw data df, start array, end array
+    OUTPUT: multi latency df concat'd from individual latency dfs
     '''
     result = []
     box_arr = list(m_body_df.columns.levels[0])
@@ -127,13 +122,13 @@ def latency_calc(m_body_df, start_array, end_array):
 
         # box_arr.append(box_num)
         result.append(latency_only)
-    print(result)
+
     m_latency_df = pd.concat(result, axis=1, keys=box_arr, names=['Box Number', 'Latency'])
 
     return m_latency_df
 
 
-### The below functions are used for plotting ###
+### The below functions are used for plotting (from JHL code) ###
 def convert_to_long_format(multi_df):
     stacked = multi_df.stack("Box Number")
     stacked_idx = stacked.reset_index()
