@@ -35,7 +35,9 @@ After getting the metrics for each day, move the files into a single folder for 
 - Output: Summary Excel Sheet
     - title format: ***Group5_dark_Summary.xlsx***
 
-
+#### Step8: Latency calculations
+- Input: aggregated csv file (Step0 output) ex) ***0228 P5_concat.csv***
+- Output: calculated latencies for user-selected paradigm and latency type (ie. correct response, reward retrieval, or trial initiation latencies)
 
 
 #### Plotting
