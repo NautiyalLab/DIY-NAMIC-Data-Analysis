@@ -17,8 +17,8 @@ from xBasic_Group_Info import *
 columns = ['event_string', 'event_code', 'timestamp', 'counter']
 
 ## Basic Information on Trials (Start and End of Trials) (used in xFinal scripts)
-trial_start = ['7171','9171']
-trial_end = ['7170','7160','7540','9170','9160','9540']   # Correct Trial / Incorrect Trial / Omission Trial
+# trial_start = ['7171','9171']
+# trial_end = ['7170','7160','7540','9170','9160','9540']   # Correct Trial / Incorrect Trial / Omission Trial
 
 
 
@@ -34,12 +34,15 @@ def get_i_response_latency(i_df, start_array, end_array):
 
     OBJECTIVE: to get a even-numbered dataframe (ex: length of start AND end is identical!)
     """
-
-    # make dataframes out of trial start / trial end
     start_code_df = i_df.loc[i_df.event_code.isin(start_array)]
     end_code_df = i_df.loc[i_df.event_code.isin(end_array)]
 
     # OUTER IF --> determines FIRST ROW modification
+    # print("START", start_code_df)
+    # print("start array", start_array)
+    # print("END",end_code_df)
+    # print('end array', end_array)
+
     if (start_code_df.iloc[0]['timestamp'] <= end_code_df.iloc[0]['timestamp']):
 
         # INNER IF --> determines LAST ROW modification
@@ -78,11 +81,8 @@ def get_i_response_latency(i_df, start_array, end_array):
     latency_df = pd.DataFrame(zip(start_time, end_time, event_code), columns=['start_time', 'end_time', 'event_code'])
     latency_df['latency'] = latency_df.end_time - latency_df.start_time
     latency_df['location'] = latency_df.event_code.str[0]
-
     code_info_latency = latency_df[['event_code', 'latency', 'location']]
-
     return code_info_latency
-
 
 ### Creating Multi_Latency Dataframe from the individual latency dataframe
 

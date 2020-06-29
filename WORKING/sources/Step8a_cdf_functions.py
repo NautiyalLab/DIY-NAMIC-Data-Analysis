@@ -1,11 +1,8 @@
-import numpy as np
-
 ## From Stephanie's Code --> Need this portion to use matplotlib and tkinter?
 import matplotlib
+import numpy as np
+
 matplotlib.use("TkAgg")
-
-from matplotlib import pyplot as plt
-
 
 
 ### Actual Plotting (CUMULATIVE DENSITY FUNCTION PLOTTING)

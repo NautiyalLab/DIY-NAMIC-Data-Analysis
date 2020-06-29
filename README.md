@@ -8,8 +8,9 @@ ___
 ### General Notes on Code Organization
 
 - Code is organized sequentially (Steps 0 through x)
-- Actual scripts to run are labelled with the suffix **"Function_Calls"**
-- Scripts with sub-alphabets (ex. 1a) contain functions that are used by the **Function_Calls** scripts
+- Actual scripts to run are labelled with the suffix **"Function_Calls"**. and are in the "scripts" folder
+- Scripts with sub-alphabets (ex. 1a) contain functions that are used by the **Function_Calls** scripts, and are in the "sources" folder
+- Scripts with sub-alphabet "x" (ex. 8x) are unused/WIP code
 - All GUI-related functions are contained within `Tkinter_Selection.py` script.
 
 ### How to Run
@@ -35,7 +36,9 @@ After getting the metrics for each day, move the files into a single folder for 
 - Output: Summary Excel Sheet
     - title format: ***Group5_dark_Summary.xlsx***
 
-
+#### Step8: Latency calculations
+- Input: aggregated csv file (Step0 output) ex) ***0228 P5_concat.csv***
+- Output: calculated latencies for user-selected paradigm and latency type (ie. correct response, reward retrieval, or trial initiation latencies)
 
 
 #### Plotting
