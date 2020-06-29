@@ -8,8 +8,9 @@ ___
 ### General Notes on Code Organization
 
 - Code is organized sequentially (Steps 0 through x)
-- Actual scripts to run are labelled with the suffix **"Function_Calls"**
-- Scripts with sub-alphabets (ex. 1a) contain functions that are used by the **Function_Calls** scripts
+- Actual scripts to run are labelled with the suffix **"Function_Calls"**. and are in the "scripts" folder
+- Scripts with sub-alphabets (ex. 1a) contain functions that are used by the **Function_Calls** scripts, and are in the "sources" folder
+- Scripts with sub-alphabet "x" (ex. 8x) are unused/WIP code
 - All GUI-related functions are contained within `Tkinter_Selection.py` script.
 
 ### How to Run
